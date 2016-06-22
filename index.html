@@ -95,6 +95,10 @@ task.commentsAndCommits.forEach(action => {
     prevDate = Date.parse(action.createdAt);
 });
                 </code></pre>
+                <pre><code class="hljs javascript size-XS fragment">
+let currentDeadline = lastAction.createdAt + (taskCountDays - lastAction.user)
+return new Date(currentDedline);
+                </code></pre>
             </section>
 
             <section>
