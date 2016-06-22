@@ -96,7 +96,7 @@ img.invert {
 pre,
 pre code {
     font-size: 26px !important;
-    font-family: 'sourcecodepro-light' !important;
+    font-family: 'sourcecodepro-light', textbook-light, Arial !important;
 }
 
 pre {

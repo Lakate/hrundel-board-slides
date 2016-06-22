@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>Лекция «Базы данных»</title>
+    <title>Hrundel-board</title>
 
     <meta name="description" content="Hrundel-board">
     <meta name="author" content="Латыпова Екатерина">
@@ -52,7 +52,7 @@
             </div>
         </section>
 
-        <section data-transition="none">
+        <section>
             <h2>Задачи</h2>
             <ul>
                 <li class="fragment">присылать оповещения студенту или ментору,
@@ -62,7 +62,7 @@
             </ul>
         </section>
 
-        <section data-transition="none">
+        <section>
             <h2>Технологии</h2>
             <ul>
                 <li class="fragment">express</li>
@@ -77,110 +77,109 @@
             </ul>
         </section>
 
-        <section class="bg" data-transition="none" data-background="./img/01.jpg"></section>
+        <section>
+            <section>
+                <h3>Как это работает?</h3>
+            </section>
+
+            <section>
+                <h4>Вычисление дедлайна</h4>
+                <p class="grey">Используем коментарии и коммиты</p>
+                <pre><code class="hljs javascript size-XS">
+let currentDate = Date.parse(task.startDate);
+let time = {};
+                </code></pre>
+                <pre><code class="hljs javascript size-XS fragment">
+task.commentsAndCommits.forEach(commentOrCommit => {
+    time[commentOrCommit.user] += Date.parse(commentOrCommit.createdAt) - currentDate;
+    currentDate = Date.parse(commentOrCommit.createdAt);
+});
+                </code></pre>
+            </section>
+
+            <section>
+                <h2>Отправка оповещений</h2>
+                <pre><code class="hljs javascript size-XS" >
+let timeReserve = task.deadlineDate - Date.now();
+                </code></pre>
+                <pre><code class="hljs javascript size-XS" data-trim>
+        if (timeReserve <= TWENTY_FOUR_HOURS && timeReserve > TWENTY_THREE_HOURS) {
+            slack.sendMessage(student.login, taskName);
+}
+                </code></pre>
+            </section>
+
+            <section>
+                <br />
+                <h2>Отправка оповещений</h2>
+                <img style="position: relative; top: 100px" src="./img/msg.png" alt="пример оповещения">
+            </section>
+
+            <section>
+                <h2>Рисуем график</h2>
+                <pre><code class="hljs javascript size-XS">
+            let d = this.renderLine();
+            return (
+                <path className="stats-line" d={d} />
+            );
+                </code></pre>
+
+                <pre><code class="hljs javascript size-XS fragment">
+            let valueline = d3.svg.line()
+                .x(commentOrCommit => xScale(new Date(commentOrCommit.createdAt)))
+                .y(commentOrCommit => yScale(commentOrCommit.user))
+                .interpolate('step-before');
+
+            return valueline(this.props.commentsAndCommit);
+                </code></pre>
+
+            </section>
+        </section>
+
+        <section>
+            <h2>Как использовать?</h2>
+            <pre class="javascript size-l"><span class="fragment">
+{
+    "organization": "urfu-2015",
+    "standardDeadline": 14 * 24 * 60 * 60 * 1000
+    "standardPoints": 1,
+    "standardHalfPoints": 0.5,
+    "exceptionalTasks": {
+        "webdev-tasks-5": {
+            "deadline": 21 * 24 * 60 * 60 * 1000
+            "points": 2,
+            "halfPoints": 1
+        },
+        "webdev-tasks-7": {
+            "deadline": 21 * 24 * 60 * 60 * 1000
+            "points": 2,
+            "halfPoints": 1
+        }
+    },
+    "repos": ["webdev-tasks"]
+}
+            </span></pre>
+        </section>
 
         <section data-transition="none">
-            <h2>Как это работает?</h2>
-            <div style="display: flex; flex-direction: row">
-                <pre class="sql size-l">
-                    <code class="fragment">CREATE TABLE students (
-                        id MEDIUMINT NOT NULL
-                        AUTO_INCREMENT,
-                        name Varchar(30),
-                        nickname Varchar(30),
-                        group Varchar(30),
-                        PRIMARY KEY (id)
-                    )
-                    </code>
-                </pre>
-                <pre class="javascript size-l">
-                    <code class="fragment">db.students.insert({
-                        name: 'Дарья',
-                        nickname: 'Пиратка',
-                        group: 'ПИ-401'
-                    })</code>
-                </pre>
+            <blockquote style="font-size: 50px; position: relative; top: 70px;">
+                Важно не забывать, что для интерграции со Slack,
+                необходимо в профиле на github указать тот же email,
+                что и указан в Slack.
+            </blockquote>
+        </section>
+
+
+        <section>
+            <div style="position: relative; top: 150px;">
+                <h2>Демонстрация</h2>
+                <a href="http://hrundel-board.herokuapp.com" style="font-size: 50px;"
+                >http://hrundel-board.herokuapp.com</a>
             </div>
         </section>
 
-        <section data-transition="none">
-            <h2>MongoDB = JavaScript</h2>
-            <pre class="javascript size-xl">
-                <code>db.students.insert</code>
-                <span class="fragment">function ( obj , options, _allow_dot ){
-                    if ( ! obj )
-                        throw "no object passed to insert!";
-
-                    var flags = 0;
-
-                    var wc = undefined;
-                    var allowDottedFields = false;
-                    if ( options === undefined ) {
-                        // do nothing
-                    }
-                    /* и ещё куча кода */
-
-                    return result;
-                }
-                </span>
-            </pre>
-        </section>
-
-        <section data-transition="none">
-            <h2>SQL to MongoDB</h2>
-            <div><a href="https://docs.mongodb.org/manual/reference/sql-comparison/">SQL to MongoDB Mapping Chart</a></div>
-        </section>
-
-
-        <section data-transition="none">
-            <h1>Индексы</h1>
-        </section>
         <section>
-            <h2>Индексы - база телефонов</h2>
-            <pre class="javascript size-l">
-<code>
-db.phones.find({display: “+1 800-5650001”}).explain()</code>
-<span class="fragment">
-{
-    "cursor" : "BasicCursor",
-    "isMultiKey" : false,
-    "n" : 0,
-    "nscannedObjects" : 41974,
-    <mark class="fragment">"nscanned" : 41974,</mark>
-    "nscannedObjectsAllPlans" : 41974,
-    "nscannedAllPlans" : 41974,
-    "scanAndOrder" : false,
-    "indexOnly" : false,
-    "nYields" : 327,
-    "nChunkSkips" : 0,
-    <mark class="fragment">"millis" : 30,</mark>
-    "server" : "130.193.40.246-vpna.dhcp.yndx.net:27017",
-    "filterSet" : false
-}
-</span></pre>
-        </section>
-        <section data-transition="none">
-            <h2>Сильные стороны MongoDB</h2>
-            <ul>
-                <li>Большие объемы данных</li>
-                <li class="fragment">Гибкая модель данных (schemeless)</li>
-                <li class="fragment">Простота</li>
-            </ul>
-        </section>
-        <section data-transition="none">
-            <h2>Слабые стороны MongoDB</h2>
-            <ul>
-                <li>Нормализация</li>
-            </ul>
-        </section>
-        <section data-transition="none">
-            <h2>Так для чего нужно?</h2>
-            <ul>
-                <li>Быстрые прототипы</li>
-                <li class="fragment">Блоги</li>
-                <li class="fragment">Эксперименты</li>
-                <li class="fragment">Ваш проект на хакатоне</li>
-            </ul>
+            <p style="position: relative; top: 150px; font-size: 80px;">Вопросы?</p>
         </section>
     </div>
 </div>
