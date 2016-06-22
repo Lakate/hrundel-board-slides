@@ -1,183 +1,285 @@
+
 <!doctype html>
 <html lang="ru">
+
 <head>
     <meta charset="utf-8">
-    <title>Хакатон</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-    <link rel="stylesheet" href="../css/reveal.css">
-    <link rel="stylesheet" href="../css/theme/yandex.css" id="theme">
-    <link rel="stylesheet" href="../lib/css/zenburn.css">
-    <link rel="stylesheet" href="./css/user.css">
+
+    <title>Лекция «Базы данных»</title>
+
+    <meta name="description" content="Hrundel-board">
+    <meta name="author" content="Латыпова Екатерина">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="./css/reveal.css">
+    <link rel="stylesheet" href="./lib/css/animate.css">
+    <link rel="stylesheet" href="./css/theme/night.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="./lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <!--<link rel="stylesheet" href="css-custom/custom.css">-->
+    <!--<script>-->
+    <!--var link = document.createElement('link');-->
+    <!--link.rel = 'stylesheet';-->
+    <!--link.type = 'text/css';-->
+    <!--link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';-->
+    <!--document.getElementsByTagName('head')[0].appendChild(link);-->
+    <!--</script>-->
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
 </head>
-<body class="yandex"><div class="reveal"><div class="slides">
 
-<section>
-    <pre>
+<body>
 
-    &lt;!doctype html&gt;
-    &lt;html lang=&quot;ru&quot;&gt;
-        &lt;head&gt;
-            &lt;meta charset=&quot;utf-8&quot;&gt;
-            &lt;link rel=&quot;stylesheet&quot; href=&quot;css/slides.css&quot;&gt;
-        &lt;/head&gt;
+<div class="reveal">
 
-        &lt;body class=&quot;reveal&quot;&gt;
-            &lt;section&gt;
-                &lt;h2&gt;<span class="red" style="font-weight: bold; font-size: 1.2em">Хакатон</span>&lt;/h2&gt;
-            &lt;/section&gt;
+    <div class="slides">
+        <section style="font-size: 70px;">
+            <div data-transition="none" class="fragment">
+                <h2 style="font-size: 100px; margin-bottom: 50px;">Hrundel-board</h2>
+                <p style="text-align: center;">
+                    <small class="animated"><span style="color: red">Л</span>атыпова Екатерина</small><br>
+                    <small class="animated" style="margin-top: -20px"><span style="color: red">Ж</span>игалов Сергей</small>
+                </p>
+            </div>
+        </section>
 
-            &lt;script src=&quot;js/reveal.js&quot;&gt;&lt;/script&gt;
-            &lt;script src=&quot;js/slides.js&quot;&gt;&lt;/script&gt;
-        &lt;/body&gt;
-    &lt;/html&gt;
-    </pre>
-</section>
+        <section data-transition="none">
+            <h2>Задачи</h2>
+            <ul>
+                <li class="fragment">присылать оповещения студенту или ментору,
+                    в зависимости от того у кого наступает дедлайн, в приложение слак за сутки до дедлайна</li>
+                <li class="fragment">отображать дашборд спецкурса</li>
+                <li class="fragment">визуализировать сдачу каждой домашней задачи студента</li>
+            </ul>
+        </section>
 
-<section>
-    <img src="img/04.jpg" width=200 height=150>
-    <img src="img/05.jpg" width=200 height=150>
-    <img src="img/06.jpg" width=200 height=150>
-    <h4 class="green">Сервис «Фотоквест»</h4>
-    <img src="img/01.jpg" width=200 height=150>
-    <img src="img/02.jpg" width=200 height=150>
-    <img src="img/03.jpg" width=200 height=150>
-</section>
+        <section data-transition="none">
+            <h2>Технологии</h2>
+            <ul>
+                <li class="fragment">express</li>
+                <li class="fragment">eslint + stylelint</li>
+                <li class="fragment">heroku + surge</li>
+                <li class="fragment">mongoDB + mongoose</li>
+                <li class="fragment">react + redux</li>
+                <li class="fragment">bootstrap</li>
+                <li class="fragment">d3</li>
+                <li class="fragment">github API</li>
+                <li class="fragment">slack API</li>
+            </ul>
+        </section>
 
-<section>
-    <h4 class="green">Граффити Екатеринбурга</h4>
-    <div style="padding: 0 0 0 390px">
-        <p class="left"><img src="img/04.jpg" width=200 height=150></p>
-        <p class="left"><img src="img/05.jpg" width=200 height=150></p>
-        <p class="left"><img src="img/06.jpg" width=200 height=150></p>
+        <section class="bg" data-transition="none" data-background="./img/01.jpg"></section>
+
+        <section data-transition="none">
+            <h2>Как это работает?</h2>
+            <div style="display: flex; flex-direction: row">
+                <pre class="sql size-l">
+                    <code class="fragment">CREATE TABLE students (
+                        id MEDIUMINT NOT NULL
+                        AUTO_INCREMENT,
+                        name Varchar(30),
+                        nickname Varchar(30),
+                        group Varchar(30),
+                        PRIMARY KEY (id)
+                    )
+                    </code>
+                </pre>
+                <pre class="javascript size-l">
+                    <code class="fragment">db.students.insert({
+                        name: 'Дарья',
+                        nickname: 'Пиратка',
+                        group: 'ПИ-401'
+                    })</code>
+                </pre>
+            </div>
+        </section>
+
+        <section data-transition="none">
+            <h2>MongoDB = JavaScript</h2>
+            <pre class="javascript size-xl">
+                <code>db.students.insert</code>
+                <span class="fragment">function ( obj , options, _allow_dot ){
+                    if ( ! obj )
+                        throw "no object passed to insert!";
+
+                    var flags = 0;
+
+                    var wc = undefined;
+                    var allowDottedFields = false;
+                    if ( options === undefined ) {
+                        // do nothing
+                    }
+                    /* и ещё куча кода */
+
+                    return result;
+                }
+                </span>
+            </pre>
+        </section>
+
+        <section data-transition="none">
+            <h2>SQL to MongoDB</h2>
+            <div><a href="https://docs.mongodb.org/manual/reference/sql-comparison/">SQL to MongoDB Mapping Chart</a></div>
+        </section>
+
+
+        <section data-transition="none">
+            <h1>Индексы</h1>
+        </section>
+        <section>
+            <h2>Индексы - база телефонов</h2>
+            <pre class="javascript size-l">
+<code>
+db.phones.find({display: “+1 800-5650001”}).explain()</code>
+<span class="fragment">
+{
+    "cursor" : "BasicCursor",
+    "isMultiKey" : false,
+    "n" : 0,
+    "nscannedObjects" : 41974,
+    <mark class="fragment">"nscanned" : 41974,</mark>
+    "nscannedObjectsAllPlans" : 41974,
+    "nscannedAllPlans" : 41974,
+    "scanAndOrder" : false,
+    "indexOnly" : false,
+    "nYields" : 327,
+    "nChunkSkips" : 0,
+    <mark class="fragment">"millis" : 30,</mark>
+    "server" : "130.193.40.246-vpna.dhcp.yndx.net:27017",
+    "filterSet" : false
+}
+</span></pre>
+        </section>
+        <section data-transition="none">
+            <h2>Сильные стороны MongoDB</h2>
+            <ul>
+                <li>Большие объемы данных</li>
+                <li class="fragment">Гибкая модель данных (schemeless)</li>
+                <li class="fragment">Простота</li>
+            </ul>
+        </section>
+        <section data-transition="none">
+            <h2>Слабые стороны MongoDB</h2>
+            <ul>
+                <li>Нормализация</li>
+            </ul>
+        </section>
+        <section data-transition="none">
+            <h2>Так для чего нужно?</h2>
+            <ul>
+                <li>Быстрые прототипы</li>
+                <li class="fragment">Блоги</li>
+                <li class="fragment">Эксперименты</li>
+                <li class="fragment">Ваш проект на хакатоне</li>
+            </ul>
+        </section>
     </div>
-</section>
+</div>
 
-<section>
-    <h4 class="green">Граффити Екатеринбурга</h4>
-    <div style="padding: 0 0 0 350px">
-        <p class="pros left"><img src="img/04.jpg" width=200 height=150></p>
-        <p class="pros left"><img src="img/05.jpg" width=200 height=150></p>
-        <p class="cons left"><img src="img/06.jpg" width=200 height=150></p>
-    </div>
-</section>
+<script src="./lib/js/head.min.js"></script>
+<script src="./js/reveal.js"></script>
+<script src="https://yastatic.net/jquery/2.2.0/jquery.min.js"></script>
 
-<section>
-    <span>User geolocation</span> <span class="green">≈</span> <span> geolocation</span>
-</section>
-
-<section>
-    <h4 class="green">Автор</h4>
-    <p class="pros left">Авторизация/регистрация</p>
-    <p class="pros left">Создание <span class="red">одного</span> квеста</p>
-    <p class="pros left">Добавление фоток в квест <span class="grey">с геолокацией</span></p>
-</section>
-
-<section>
-    <h4 class="green">Участник</h4>
-    <p class="pros left">Авторизация/регистрация</p>
-    <p class="pros left">Просмотр списка квестов</p>
-    <p class="pros left">Прохождение квеста – <span class="green">check-in</span> фоток</p>
-</section>
-
-<section>
-    <h4 class="green">Features</h4>
-    <p class="pros left fragment">Комменты к фоткам</p>
-    <p class="pros left fragment">Emoji в комментах 🙀</p>
-    <p class="pros left fragment">Лайки к фоткам и квестам</p>
-    <p class="pros left fragment">Сортировка квестов по кол-ву лайков</p>
-    <p class="pros left fragment">Поиск квеста по названию</p>
-    <p class="pros left fragment">Стата для автора – кол-во чекинов</p>
-</section>
-
-<section data-background=img/idea.png></section>
-
-<section>
-    <h4 class="green">Три этапа – три дня</h4>
-    <ol>
-        <li class="left fragment" data-fragment-index=1><span class="fragment highlight init_visible" data-fragment-index=4>Инфраструктура, регистрация, авторизация, список квестов</span></li>
-        <li class="left fragment" data-fragment-index=2>Создание квестов и комменты</li>
-        <li class="left fragment" data-fragment-index=3>Прохождение квестов и лайки</li>
-    </ol>
-</section>
-
-<section>
-    <h4 class="green">1 этап</h4>
-    <p class="pros left fragment">Договорится о workflow</p>
-    <p class="pros left fragment">Наладить инфраструктуру<br><span class="grey">тесты, codestyle, деплой, ci, ...</span></p>
-    <p class="pros left fragment">Регистрация и авторизация</p>
-    <p class="pros left fragment">Страница списка квестов</p>
-    <p class="pros left fragment">Покрытие тестами и документация</p>
-    <p class="question left fragment">Поиск квестов по названию</p>
-</section>
-
-<section>
-    <h4>Самое важное – <span class="red">инфраструктура</span></h4>
-</section>
-
-<section>
-    <h4 class="green">Технологии</h4>
-    <p class="left fragment">Платформа – <span class="red">Node.js</span></p>
-    <p class="left fragment">Веб-сервер – <span class="grey">Express.js</span></p>
-    <p class="left fragment">Шаблоны – <span class="grey">Handlebars, Jade или JSX</span></p>
-    <p class="left fragment">Авторизация – <span class="grey">Passport.js</span></p>
-    <p class="left fragment">База данных – <span class="grey">MongoDB + </span><a href="https://mlab.com/">mLab</a></p>
-    <p class="left fragment">Деплой – <a href="https://surge.sh/">Surge</a> <span class="grey"> + </span><a href="https://heroku.com/">Heroku</a></p>
-    <p class="left fragment">CI – <a href="https://surge.sh/">Travis</a></p>
-</section>
-
-<section>
-    <h4 class="green">Регламент</h4>
-    <p class="left fragment"><span class="red">8</span> часов + 🍴</p>
-    <p class="left fragment"><span class="grey">5</span> этапов</p>
-    <p class="fragment green">После каждого</p>
-    <ul class="left" style="float: left;">
-        <li class="left fragment">Синхронизация</li>
-        <li class="left fragment">Обмен знаниями</li>
-        <li class="left fragment">Демонстрация</li>
-        <li class="left fragment">Планирование следующего</li>
-    </ul>
-</section>
-
-<section>
-    <h4 class="green">Менторы</h4>
-</section>
-
-<section>
-    <h4 class="green">Лидеры</h4>
-</section>
-
-<section>
-    <img src="img/go.jpg" width=500>
-</section>
-
-</div></div>
-
-<script src="../lib/js/head.min.js"></script>
-<script src="../js/reveal.js"></script>
 <script>
+    $('.links a').on('mouseover', function () {
+        var text = $(this).data('content');
+        $('.output-links').text(text);
+
+    });
+    $('.links a').on('blur', function () {
+        $('.output-links').text('');
+
+    });
+
+    function buildGitBranchingUrl(slide) {
+        var base = 'http://pcottle.github.io/learnGitBranching/?NODEMO&command=';
+//        var base = 'http://localhost:8099/?NODEMO&command=';
+        var commands = [
+            'importTreeNow ' + JSON.stringify(slide.tree),
+            'clear'
+        ].concat(slide.commands);
+        return base + commands.map(encodeURIComponent).join(';');
+    }
+    $('script[type="x-gitbranching"]').each(function () {
+        var params = JSON.parse(this.textContent);
+        var url = buildGitBranchingUrl(params);
+        $('<iframe>')
+                .attr({
+                    'data-src': url,
+                    width: 1000,
+                    height: 700,
+                    frameborder: 0,
+                    marginwidth: 0,
+                    marginheight: 0,
+                    scrolling: 'no',
+                    style: 'border:3px solid #666; margin-bottom:5px; max-width: 100%;',
+                    allowfullscreen: ''
+                })
+                .insertAfter($(this));
+    });
+
+    Reveal.addEventListener( 'fragmentshown', function( event ) {
+        if (Reveal.isFirstSlide()) {
+            var root = $(event.fragment);
+            console.log(root);
+            setTimeout(function () {
+                $(root).find('h1').addClass('bounceInDown');
+                $(root).find( 'h4').addClass('bounceInRight');
+                $(root).find('small').eq(0).addClass('bounceInLeft');
+                $(root).find('small').eq(1).addClass('bounceInUp');
+            }, 0);
+        }
+    } );
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
     Reveal.initialize({
         controls: false,
-        progress: false,
-        slideNumber: false,
+        progress: true,
         history: true,
-        center: true,
-        hideAddressBar: true,
-        transition: 'slide',
+        center: false,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
         dependencies: [
             {
-                src: '../plugin/highlight/highlight.js',
-                condition: function () {
-                    return Boolean(document.querySelector('pre code'));
-                },
-                callback: function () {
-                    hljs.configure({
-                        languages: ['javascript']
-                    })
-                    hljs.initHighlightingOnLoad();
-                }
+                src: './lib/js/classList.js', condition: function () {
+                return !document.body.classList;
             }
+            },
+            {
+                src: './plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: './plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: './plugin/highlight/highlight.js', async: true, condition: function () {
+                return !!document.querySelector('pre code');
+            }, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            },
+            { src: './plugin/zoom-js/zoom.js', async: true },
+            { src: './plugin/notes/notes.js', async: true }
         ]
     });
+    Reveal.configure({ slideNumber: true });
+
 </script>
+
 </body>
 </html>
