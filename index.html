@@ -79,20 +79,20 @@
 
         <section>
             <section>
-                <h3>Как это работает?</h3>
+                <h2 style="position: relative; top: 200px;">Как это работает?</h2>
             </section>
 
             <section>
                 <h4>Вычисление дедлайна</h4>
                 <p class="grey">Используем коментарии и коммиты</p>
                 <pre><code class="hljs javascript size-XS">
-let currentDate = Date.parse(task.startDate);
+let prevDate = Date.parse(task.startDate);
 let time = {};
                 </code></pre>
                 <pre><code class="hljs javascript size-XS fragment">
-task.commentsAndCommits.forEach(commentOrCommit => {
-    time[commentOrCommit.user] += Date.parse(commentOrCommit.createdAt) - currentDate;
-    currentDate = Date.parse(commentOrCommit.createdAt);
+task.commentsAndCommits.forEach(action => {
+    time[action.user] += Date.parse(action.createdAt) - prevDate;
+    prevDate = Date.parse(action.createdAt);
 });
                 </code></pre>
             </section>
@@ -134,31 +134,6 @@ let timeReserve = task.deadlineDate - Date.now();
                 </code></pre>
 
             </section>
-        </section>
-
-        <section>
-            <h2>Как использовать?</h2>
-            <pre class="javascript size-l"><span class="fragment">
-{
-    "organization": "urfu-2015",
-    "standardDeadline": 14 * 24 * 60 * 60 * 1000
-    "standardPoints": 1,
-    "standardHalfPoints": 0.5,
-    "exceptionalTasks": {
-        "webdev-tasks-5": {
-            "deadline": 21 * 24 * 60 * 60 * 1000
-            "points": 2,
-            "halfPoints": 1
-        },
-        "webdev-tasks-7": {
-            "deadline": 21 * 24 * 60 * 60 * 1000
-            "points": 2,
-            "halfPoints": 1
-        }
-    },
-    "repos": ["webdev-tasks"]
-}
-            </span></pre>
         </section>
 
         <section data-transition="none">
